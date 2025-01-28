@@ -1,7 +1,6 @@
 package main.Entities;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "distributori") // Nome della tabella nel database
@@ -9,7 +8,7 @@ public class Distributori extends EmettitoreBiglietti {
 
     @Id
     @Column(name = "idDistributore", nullable = false, unique = true)
-    private UUID idDistributore;
+    private Long idDistributore;
 
     @Column(nullable = false)
     private boolean stato;
@@ -37,11 +36,11 @@ public class Distributori extends EmettitoreBiglietti {
     }
 
     // Getter e Setter
-    public UUID getIdDistributore() {
+    public Long getIdDistributore() {
         return idDistributore;
     }
 
-    public void setIdDistributore(UUID idDistributore) {
+    public void setIdDistributore(Long idDistributore) {
         this.idDistributore = idDistributore;
     }
 

@@ -8,7 +8,7 @@ import java.util.UUID;
 public class Utente {
 
     @Id
-
+    @GeneratedValue(strategy = GenerationType.AUTO) // Generazione automatica dell'ID
     private UUID idUtente;
 
     private String nome;
@@ -17,8 +17,8 @@ public class Utente {
 
     private int eta;
 
-    @OneToOne
-    @JoinColumn(name = "tesseraID", nullable = false)
+    @OneToOne(cascade = CascadeType.REMOVE) // Cascading delete
+    @JoinColumn(name = "idtessera", nullable = false)
     private Tessera tessera;
 
     // Costruttore vuoto richiesto da Hibernate
@@ -72,5 +72,16 @@ public class Utente {
 
     public void setTessera(Tessera tessera) {
         this.tessera = tessera;
+    }
+
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "idUtente=" + idUtente +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", eta=" + eta +
+                ", tessera=" + tessera +
+                '}';
     }
 }
