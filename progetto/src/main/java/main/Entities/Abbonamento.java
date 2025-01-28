@@ -8,22 +8,25 @@ import java.util.UUID;
 public class Abbonamento {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "idAbbonamento", nullable = false) // Nome colonna e vincolo NOT NULL
     private UUID idAbbonamento;
 
-    @Column(nullable = false)
+    @Column(name = "tipologia", nullable = false, length = 50) // Nome colonna, NOT NULL, lunghezza massima 50
     private String tipologia;
 
-    @Column(nullable = false)
+    @Column(name = "stato", nullable = false) // Nome colonna e vincolo NOT NULL
     private boolean stato;
 
-    @Column(nullable = false)
+    @Column(name = "data_emissione", nullable = false) // Nome colonna e vincolo NOT NULL
     private LocalDate dataEmissione;
 
-    @Column(nullable = false)
+    @Column(name = "scadenza", nullable = false) // Nome colonna e vincolo NOT NULL
     private LocalDate scadenza;
 
     // Costruttore vuoto richiesto da Hibernate
-    public Abbonamento() {}
+    public Abbonamento() {
+    }
 
     // Costruttore con parametri
     public Abbonamento(String tipologia, boolean stato, LocalDate dataEmissione, LocalDate scadenza) {
@@ -34,11 +37,11 @@ public class Abbonamento {
     }
 
     // Getter e Setter
-    public UUID getIdBiglietto() {
+    public UUID getIdAbbonamento() {
         return idAbbonamento;
     }
 
-    public void setIdBiglietto(UUID idAbbonamento) {
+    public void setIdAbbonamento(UUID idAbbonamento) {
         this.idAbbonamento = idAbbonamento;
     }
 

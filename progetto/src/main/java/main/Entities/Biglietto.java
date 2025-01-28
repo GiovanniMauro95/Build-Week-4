@@ -15,21 +15,22 @@ public class Biglietto {
 
     private LocalDate data_emissione;
 
-    //costruttori
-    public Biglietto() {}
-    
-    public Biglietto(boolean stato, LocalDate data_emissione) {
-        this.stato=stato;
-        this.data_emissione=data_emissione;
+    // costruttori
+    public Biglietto() {
     }
 
-    //getters e setters
+    public Biglietto(boolean stato, LocalDate data_emissione) {
+        this.stato = stato;
+        this.data_emissione = data_emissione;
+    }
+
+    // getters e setters
     public void setStato(boolean stato) {
-        this.stato=stato;
+        this.stato = stato;
     }
 
     public void setDataEmissione(LocalDate data_emissione) {
-        this.data_emissione=data_emissione;
+        this.data_emissione = data_emissione;
     }
 
     public boolean getStato() {
@@ -38,5 +39,14 @@ public class Biglietto {
 
     public LocalDate getDataEmissione() {
         return this.data_emissione;
+    }
+
+    @Override
+    public String toString() {
+        return "Biglietto{" +
+                "codiceUnivoco=" + idBiglietto +
+                ", data_di_Emissione=" + data_emissione +
+                ", stato =" + stato +
+                '}';
     }
 }
