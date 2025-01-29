@@ -9,10 +9,13 @@ import jakarta.persistence.*;
 public class Biglietto {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID idBiglietto;
-
+   
+    @Column(name = "stato", nullable = false)
     private boolean stato;
 
+    @Column(name = "data_emissione", nullable = false)
     private LocalDate data_emissione;
 
     // costruttori

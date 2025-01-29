@@ -16,7 +16,7 @@ public class Utente {
     private int eta;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "idtessera", nullable = false)
+    @JoinColumn(name = "idtessera", nullable = true)
     private Tessera tessera;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -41,11 +41,10 @@ public class Utente {
         this.biglietto = null;
     }
 
-    // Costruttore con abbonamento e biglietto
-    public Utente(Biglietto biglietto) {
-        this.nome = null;
-        this.cognome = null;
-        this.eta = -1;
+    public Utente(String nome, String cognome, int eta, Biglietto biglietto) {
+        this.nome = nome;
+        this.cognome = cognome;
+        this.eta = eta;
         this.tessera = null;
         this.abbonamento = null;
         this.biglietto = biglietto;
@@ -110,14 +109,12 @@ public class Utente {
 
     @Override
     public String toString() {
-        return "Utente{" +
-                "idUtente=" + idUtente +
-                ", nome='" + nome + '\'' +
-                ", cognome='" + cognome + '\'' +
-                ", eta=" + eta +
-                ", tessera=" + tessera +
-                ", abbonamento=" + (abbonamento != null ? abbonamento.toString() : "Nessun abbonamento") +
-                ", biglietto=" + (biglietto != null ? biglietto.toString() : "Nessun biglietto") +
-                '}';
+        return "ID = " + idUtente +
+                ",\nNome = '" + nome + '\'' +
+                ",\nCognome = '" + cognome + '\'' +
+                ",\nEta = " + eta +
+                ",\nTessera = " + tessera +
+                ",\nAbbonamento = " + (abbonamento != null ? abbonamento.toString() : "Nessun abbonamento") +
+                ",\nBiglietto = " + (biglietto != null ? biglietto.toString() : "Nessun biglietto");
     }
 }

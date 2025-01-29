@@ -67,13 +67,33 @@ public class Abbonamento {
 
     public void setDataEmissione(LocalDate dataEmissione) {
         this.dataEmissione = dataEmissione;
+        setScadenza(dataEmissione);
+    }
+
+    public void setDataEmissioneMensile(LocalDate dataEmissione) {
+        this.dataEmissione = dataEmissione;
+        setScadenzaMensile(dataEmissione);
     }
 
     public LocalDate getScadenza() {
         return scadenza;
     }
 
-    public void setScadenza(LocalDate scadenza) {
-        this.scadenza = scadenza;
+    public void setScadenza(LocalDate dataEmissione) {
+        this.scadenza = dataEmissione.plusDays(7);
     }
+
+    public void setScadenzaMensile(LocalDate dataEmissione) {
+        this.scadenza = dataEmissione.plusDays(30);
+    }
+
+    @Override
+    public String toString() {
+        return "{ idAbbonamento = " + idAbbonamento +
+                ", tipologia = '" + tipologia + '\'' +
+                ", stato = " + stato +
+                ", dataEmissione = " + dataEmissione +
+                ", scadenza = " + scadenza + '}';
+    }
+
 }

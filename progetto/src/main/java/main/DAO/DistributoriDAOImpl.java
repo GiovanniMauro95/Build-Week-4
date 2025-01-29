@@ -17,7 +17,7 @@ public class DistributoriDAOImpl implements DistributoriDAO {
             em.getTransaction().begin();
             em.persist(distributori); // Persiste il distributore
             em.getTransaction().commit();
-            System.out.println("Distributore aggiunto con successo: " + distributori);
+            System.out.println("\nDistributore aggiunto con successo: " + distributori);
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

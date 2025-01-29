@@ -9,5 +9,9 @@ public interface UtenteDAO {
 
     void rimuoviUtente(UUID idUtente);
 
+    Utente trovaUtente(String nome, String cognome, int eta);
+
     List<Utente> getAllUtenti();
+
+    void aggiornaUtente(Utente utente);
 }

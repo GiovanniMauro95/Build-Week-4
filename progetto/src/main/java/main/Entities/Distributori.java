@@ -84,11 +84,11 @@ public class Distributori {
 
     @Override
     public String toString() {
-        return "{" +
-                "Numero Distributore =" + idDistributore +
-                ", Attivo =" + stato +
-                ", Biglietti Venduti =" + bigliettiVenduti +
-                ", Abbonamenti Venduti =" + abbonamentiVenduti +
+        return "\nDistributore : {" +
+                "Numero Distributore = " + idDistributore +
+                ", Attivo = " + stato +
+                ", Biglietti Venduti = " + bigliettiVenduti +
+                ", Abbonamenti Venduti = " + abbonamentiVenduti +
                 "}\n";
     }
 }
