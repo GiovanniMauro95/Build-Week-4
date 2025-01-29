@@ -16,6 +16,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         int scelta;
 
@@ -54,9 +55,9 @@ public class Main {
     }
 
     private static void gestisciDistributore(Scanner scanner) {
-        
+
         DistributoriDAO distributoriDAO = new DistributoriDAOImpl();
-        Distributori newDistributore = new Distributori(true); 
+        Distributori newDistributore = new Distributori(true);
         distributoriDAO.aggiungiDistributori(newDistributore);
         List<Distributori> listDistributori = distributoriDAO.getAllDistributori();
 
@@ -110,7 +111,8 @@ public class Main {
         System.out.println("Premi '1' per un settimanale, '2' per un mensile:");
         int scelta = scanner.nextInt();
 
-        Abbonamento newAbbonamento = new Abbonamento("Settimanale", true, LocalDate.now(), LocalDate.now().plusDays(7));
+        Abbonamento newAbbonamento = new Abbonamento("Settimanale", true,
+                LocalDate.now(), LocalDate.now().plusDays(7));
         if (scelta == 2) {
             newAbbonamento.setTipologia("Mensile");
             newAbbonamento.setScadenza(LocalDate.now().plusDays(30));

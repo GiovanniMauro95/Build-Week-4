@@ -19,11 +19,11 @@ public class Utente {
     @JoinColumn(name = "idtessera", nullable = false)
     private Tessera tessera;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idabbonamento", nullable = true) // Può essere nullo
     private Abbonamento abbonamento;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idbiglietto", nullable = true) // Può essere nullo
     private Biglietto biglietto;
 
