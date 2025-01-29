@@ -17,7 +17,8 @@ public class Tessera {
     private LocalDate scadenza;
 
     // Costruttore vuoto
-    public Tessera() {}
+    public Tessera() {
+    }
 
     // Costruttore con parametri
     public Tessera(boolean stato, LocalDate dataEmissione) {

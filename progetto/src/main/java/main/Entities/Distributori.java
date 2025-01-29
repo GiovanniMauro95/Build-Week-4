@@ -20,8 +20,9 @@ public class Distributori {
     @Column(name = "abbonamentiVenduti", nullable = false)
     private int abbonamentiVenduti = 0;
 
-    @Column(name = "idDistributoreComposto", nullable = true, length = 255)
-    private String idDistributoreComposto;
+    // @Column(name = "idDistributoreComposto", insertable = false, updatable =
+    // false)
+    // private String idDistributoreComposto;
 
     // Costruttore che accetta solo lo stato
     public Distributori(boolean stato) {
@@ -53,13 +54,13 @@ public class Distributori {
         return abbonamentiVenduti;
     }
 
-    public String getIdDistributoreComposto() {
-        return idDistributoreComposto;
-    }
+    // public String getIdDistributoreComposto() {
+    // return idDistributoreComposto;
+    // }
 
-    public void setIdDistributoreComposto(String idDistributoreComposto) {
-        this.idDistributoreComposto = idDistributoreComposto;
-    }
+    // public void setIdDistributoreComposto(String idDistributoreComposto) {
+    // this.idDistributoreComposto = idDistributoreComposto;
+    // }
 
     // Metodo per emettere un biglietto
     public Biglietto emettiBiglietto() {
@@ -79,5 +80,15 @@ public class Distributori {
         }
         abbonamentiVenduti++;
         return new Abbonamento(); // Presumo tu abbia una classe Abbonamento con un costruttore
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "Numero Distributore =" + idDistributore +
+                ", Attivo =" + stato +
+                ", Biglietti Venduti =" + bigliettiVenduti +
+                ", Abbonamenti Venduti =" + abbonamentiVenduti +
+                "}\n";
     }
 }

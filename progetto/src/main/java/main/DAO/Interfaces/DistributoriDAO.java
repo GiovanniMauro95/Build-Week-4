@@ -8,5 +8,7 @@ public interface DistributoriDAO {
 
     void rimuoviDistributori(Long idDistributore);
 
+    Distributori getDistributore(int scelta);
+
     List<Distributori> getAllDistributori();
 }

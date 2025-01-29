@@ -54,9 +54,9 @@ public class Main {
     }
 
     private static void gestisciDistributore(Scanner scanner) {
-        
+
         DistributoriDAO distributoriDAO = new DistributoriDAOImpl();
-        Distributori newDistributore = new Distributori(true); 
+        Distributori newDistributore = new Distributori(true);
         distributoriDAO.aggiungiDistributori(newDistributore);
         List<Distributori> listDistributori = distributoriDAO.getAllDistributori();
 
@@ -65,14 +65,31 @@ public class Main {
             return;
         }
 
-        System.out.println("Se sei registrato premi '1', altrimenti premi '2':");
+        System.out.println('\n' + "Lista Distributori : " + '\n' + listDistributori);
+
+        System.out.println("Scegli il distributore :");
         int scelta = scanner.nextInt();
 
-        if (scelta == 1) {
-            gestisciUtenteRegistrato(scanner);
+        Distributori distributoreScelto = distributoriDAO.getDistributore(scelta);
+
+        System.out.println("Scelto dall'utente" + distributoreScelto);
+
+        if (scelta >= 0) {
+
+            System.out.println("Se sei registrato premi '1', altrimenti premi '2':");
+            scelta = scanner.nextInt();
+
+            if (scelta == 1) {
+                gestisciUtenteRegistrato(scanner);
+            } else {
+                gestisciNuovoUtente(scanner);
+            }
+
         } else {
-            gestisciNuovoUtente(scanner);
+            System.out.println("Opzione non valida !");
+            return;
         }
+
     }
 
     private static void gestisciUtenteRegistrato(Scanner scanner) {
