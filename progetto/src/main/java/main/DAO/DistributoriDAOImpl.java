@@ -61,6 +61,11 @@ public class DistributoriDAOImpl implements DistributoriDAO {
         try {
             // Creiamo una query JPQL per ottenere tutti i distributori
             TypedQuery<Distributori> query = em.createQuery("SELECT d FROM Distributori d", Distributori.class);
+            if (query.getResultList().isEmpty()) {
+                System.out.println("Non ci sono distributori attivi !");
+            } else {
+                System.out.println(query.getResultList());
+            }
             return query.getResultList(); // Restituisce la lista di distributori
         } catch (Exception e) {
             e.printStackTrace();

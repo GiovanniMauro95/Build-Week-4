@@ -4,44 +4,37 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "distributori") // Nome della tabella nel database
-public class Distributori extends EmettitoreBiglietti {
+public class Distributori {
 
     @Id
     @Column(name = "idDistributore", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Se vuoi che venga generato automaticamente
     private Long idDistributore;
 
     @Column(nullable = false)
     private boolean stato;
 
     @Column(name = "bigliettiVenduti", nullable = false)
-    private int bigliettiVenduti;
+    private int bigliettiVenduti = 0;
 
     @Column(name = "abbonamentiVenduti", nullable = false)
-    private int abbonamentiVenduti;
+    private int abbonamentiVenduti = 0;
 
     @Column(name = "idDistributoreComposto", nullable = true, length = 255)
     private String idDistributoreComposto;
+
+    // Costruttore che accetta solo lo stato
+    public Distributori(boolean stato) {
+        this.stato = stato;
+    }
 
     // Costruttore vuoto richiesto da Hibernate
     public Distributori() {
     }
 
-    // Costruttore con parametri (opzionale, per comodità)
-    public Distributori(Abbonamento abbonamento, Biglietto biglietto, boolean stato, int bigliettiVenduti, int abbonamentiVenduti, String idDistributoreComposto) {
-        super(abbonamento, biglietto);
-        this.stato = stato;
-        this.bigliettiVenduti = bigliettiVenduti;
-        this.abbonamentiVenduti = abbonamentiVenduti;
-        this.idDistributoreComposto = idDistributoreComposto;
-    }
-
     // Getter e Setter
     public Long getIdDistributore() {
         return idDistributore;
-    }
-
-    public void setIdDistributore(Long idDistributore) {
-        this.idDistributore = idDistributore;
     }
 
     public boolean isStato() {
@@ -56,16 +49,8 @@ public class Distributori extends EmettitoreBiglietti {
         return bigliettiVenduti;
     }
 
-    public void setBigliettiVenduti(int bigliettiVenduti) {
-        this.bigliettiVenduti = bigliettiVenduti;
-    }
-
     public int getAbbonamentiVenduti() {
         return abbonamentiVenduti;
-    }
-
-    public void setAbbonamentiVenduti(int abbonamentiVenduti) {
-        this.abbonamentiVenduti = abbonamentiVenduti;
     }
 
     public String getIdDistributoreComposto() {
@@ -74,5 +59,25 @@ public class Distributori extends EmettitoreBiglietti {
 
     public void setIdDistributoreComposto(String idDistributoreComposto) {
         this.idDistributoreComposto = idDistributoreComposto;
+    }
+
+    // Metodo per emettere un biglietto
+    public Biglietto emettiBiglietto() {
+        if (!stato) {
+            System.out.println("Distributore non attivo, impossibile emettere un biglietto.");
+            return null;
+        }
+        bigliettiVenduti++;
+        return new Biglietto(); // Presumo tu abbia una classe Biglietto con un costruttore
+    }
+
+    // Metodo per emettere un abbonamento
+    public Abbonamento emettiAbbonamento() {
+        if (!stato) {
+            System.out.println("Distributore non attivo, impossibile emettere un abbonamento.");
+            return null;
+        }
+        abbonamentiVenduti++;
+        return new Abbonamento(); // Presumo tu abbia una classe Abbonamento con un costruttore
     }
 }

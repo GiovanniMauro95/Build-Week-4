@@ -1,11 +1,17 @@
 package main;
 
+import main.DAO.DistributoriDAOImpl;
 import main.DAO.UtenteDAOImpl;
+import main.DAO.Interfaces.DistributoriDAO;
+import main.DAO.Interfaces.UtenteDAO;
+import main.Entities.Abbonamento;
 import main.Entities.Biglietto;
+import main.Entities.Distributori;
 import main.Entities.Tessera;
 import main.Entities.Utente;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -22,15 +28,12 @@ public class Main {
             case 1:
                 gestisciUtente(scanner);
                 break;
-
             case 2:
-                gestisciAdmin(scanner);
+                // gestisciAdmin(scanner);
                 break;
-
             default:
                 System.out.println("Scelta non valida. Riprova.");
         }
-
         scanner.close();
     }
 
@@ -39,81 +42,89 @@ public class Main {
         int scelta = scanner.nextInt();
 
         switch (scelta) {
-            case 1: // Distributore Automatico
+            case 1:
                 gestisciDistributore(scanner);
                 break;
-
-            case 2: // Rivenditore Autorizzato
+            case 2:
                 System.out.println("Funzionalità Rivenditore non ancora implementata.");
                 break;
-
             default:
                 System.out.println("Scelta non valida. Riprova.");
         }
     }
 
     private static void gestisciDistributore(Scanner scanner) {
+        
+        DistributoriDAO distributoriDAO = new DistributoriDAOImpl();
+        Distributori newDistributore = new Distributori(true); 
+        distributoriDAO.aggiungiDistributori(newDistributore);
+        List<Distributori> listDistributori = distributoriDAO.getAllDistributori();
+
+        if (listDistributori.isEmpty()) {
+            System.out.println("Ci dispiace, ma puoi andare a piedi, tutta salute!");
+            return;
+        }
+
         System.out.println("Se sei registrato premi '1', altrimenti premi '2':");
         int scelta = scanner.nextInt();
 
         if (scelta == 1) {
-            System.out.println("Utente registrato. Funzionalità in sviluppo.");
+            gestisciUtenteRegistrato(scanner);
         } else {
-            System.out.println("Scegli tra:\n1. Creare un abbonamento\n2. Acquistare un biglietto");
-            scelta = scanner.nextInt();
-
-            if (scelta == 1) {
-                creaAbbonamento(scanner);
-            } else {
-                creaBiglietto();
-            }
+            gestisciNuovoUtente(scanner);
         }
     }
 
-    private static void creaAbbonamento(Scanner scanner) {
-        scanner.nextLine(); // Pulizia buffer
-        System.out.println("Registrazione nuovo utente. Inserisci i tuoi dati:");
-        System.out.print("Nome: ");
-        String nome = scanner.nextLine();
-        System.out.print("Cognome: ");
-        String cognome = scanner.nextLine();
-        System.out.print("Età: ");
-        int eta = scanner.nextInt();
-
-        // Creazione tessera e utente
-        Tessera tessera = new Tessera(true, LocalDate.now());
-        Utente utente = new Utente(nome, cognome, eta, tessera);
-
-        // Simulazione salvataggio
-        UtenteDAOImpl utenteDAO = new UtenteDAOImpl();
-        utenteDAO.aggiungiUtente(utente);
-
-        System.out.println("Abbonamento creato con successo per: " + utente);
+    private static void gestisciUtenteRegistrato(Scanner scanner) {
+        System.out.println("Utente registrato. \n");
+        System.out.println("Scegli tra:\n1. Creare un abbonamento\n2. Acquistare un biglietto");
+        int scelta = scanner.nextInt();
+        // Logica per l'utente registrato da implementare
     }
 
-    private static void creaBiglietto() {
-        Biglietto biglietto = new Biglietto(true, LocalDate.now());
-        System.out.println("Biglietto emesso con successo:");
-        System.out.println(biglietto);
-    }
-
-    private static void gestisciAdmin(Scanner scanner) {
-        System.out.println("Accesso Admin. Seleziona un'opzione:");
-        System.out.println("1. Calcola statistiche\n2. Gestione parco mezzi");
+    private static void gestisciNuovoUtente(Scanner scanner) {
+        System.out.println("Se ti vuoi registrare premi '1'\n Se vuoi solo comprare un biglietto premi '2'");
         int scelta = scanner.nextInt();
 
-        switch (scelta) {
-            case 1:
-                System.out.println("Funzionalità di calcolo statistiche in sviluppo.");
-                break;
-
-            case 2:
-                System.out.println("Funzionalità di gestione parco mezzi in sviluppo.");
-                break;
-
-            default:
-                System.out.println("Scelta non valida. Riprova.");
+        if (scelta == 1) {
+            registraNuovoUtente(scanner);
+        } else {
+            acquistaBiglietto();
         }
     }
 
+    private static void registraNuovoUtente(Scanner scanner) {
+        scanner.nextLine(); // Per evitare problemi con il buffer
+        Tessera nuovaTessera = new Tessera(true, LocalDate.now());
+
+        System.out.println("Inserisci Nome: ");
+        String nome = scanner.nextLine();
+        System.out.println("Inserisci Cognome: ");
+        String cognome = scanner.nextLine();
+        System.out.println("Inserisci Eta': ");
+        int eta = scanner.nextInt();
+
+        Utente nuovoUtente = new Utente(nome, cognome, eta, nuovaTessera);
+        System.out.println(nuovoUtente + "\n");
+
+        System.out.println("Premi '1' per un settimanale, '2' per un mensile:");
+        int scelta = scanner.nextInt();
+
+        Abbonamento newAbbonamento = new Abbonamento("Settimanale", true, LocalDate.now(), LocalDate.now().plusDays(7));
+        if (scelta == 2) {
+            newAbbonamento.setTipologia("Mensile");
+            newAbbonamento.setScadenza(LocalDate.now().plusDays(30));
+        }
+        nuovoUtente.setAbbonamento(newAbbonamento);
+
+        UtenteDAO utenteDAO = new UtenteDAOImpl();
+        utenteDAO.aggiungiUtente(nuovoUtente);
+    }
+
+    private static void acquistaBiglietto() {
+        Biglietto newBiglietto = new Biglietto(true, LocalDate.now());
+        Utente nuovoUtente = new Utente(newBiglietto);
+        UtenteDAO utenteDAO = new UtenteDAOImpl();
+        utenteDAO.aggiungiUtente(nuovoUtente);
+    }
 }
