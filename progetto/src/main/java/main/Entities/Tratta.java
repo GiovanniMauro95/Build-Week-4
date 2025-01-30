@@ -8,26 +8,27 @@ import java.util.UUID;
 public class Tratta {
 
     @Id
-    @Column(name = "idTratta", nullable = false, unique = true)
-    private UUID idTratta;
+    private UUID idTratta; // Non usare auto-generazione del database
 
-    @Column(name = "capoLinea", nullable = false, length = 100)
+    @Column(name = "capoLinea", nullable = false)
     private String capoLinea;
 
-    @Column(name = "zonaPartenza", nullable = false, length = 100)
+    @Column(name = "zonaPartenza", nullable = false)
     private String zonaPartenza;
 
     @Column(name = "tempoDiPercorrenza", nullable = false)
-    private String tempoDiPercorrenza; 
+    private String tempoDiPercorrenza; // Se INTERVAL in DB, usa Duration in Java
 
-    // Costruttore vuoto richiesto da Hibernate
-    public Tratta() {}
-
-    // Costruttore con parametri
-    public Tratta(String capoLinea, String zonaPartenza, String tempoDiPercorrenza) {
+    // Costruttore con ID esplicito
+    public Tratta(UUID idTratta, String capoLinea, String zonaPartenza, String tempoDiPercorrenza) {
+        this.idTratta = idTratta;
         this.capoLinea = capoLinea;
         this.zonaPartenza = zonaPartenza;
         this.tempoDiPercorrenza = tempoDiPercorrenza;
+    }
+
+    // Costruttore vuoto richiesto da Hibernate
+    public Tratta() {
     }
 
     // Getter e Setter

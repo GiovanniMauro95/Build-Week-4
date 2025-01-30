@@ -17,7 +17,7 @@ public class RivenditoriDAOImpl implements RivenditoriDAO {
             em.getTransaction().begin();
             em.persist(rivenditore); // Persiste il rivenditore
             em.getTransaction().commit();
-            System.out.println("Rivenditore aggiunto con successo: " + rivenditore);
+            System.out.println("\nRivenditore aggiunto con successo: " + rivenditore);
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
@@ -69,4 +69,27 @@ public class RivenditoriDAOImpl implements RivenditoriDAO {
             em.close();
         }
     }
+
+    @Override
+    public Rivenditori getRivenditore(int scelta) {
+
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        try {
+            // Creiamo una query JPQL per ottenere tutti i distributori
+            TypedQuery<Rivenditori> query = em.createQuery("SELECT r FROM Rivenditori r", Rivenditori.class);
+
+            List<Rivenditori> listRivenditori = query.getResultList();
+            Rivenditori rivenditore = listRivenditori.get(scelta);
+            return rivenditore;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return null; // In caso di errore, restituisce null
+
+        } finally {
+            em.close();
+        }
+    }
+
 }

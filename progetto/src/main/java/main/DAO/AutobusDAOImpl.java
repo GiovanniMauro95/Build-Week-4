@@ -11,18 +11,20 @@ import java.util.UUID;
 
 public class AutobusDAOImpl implements AutobusDAO {
 
-    @Override
     public void aggiungiAutobus(Autobus autobus) {
         EntityManager em = EntityManagerUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-            em.persist(autobus); 
-            em.getTransaction().commit();
-            System.out.println("Autobus aggiunto con successo: " + autobus);
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
+
+            // Controlla se StatoMezzo è già nel DB, altrimenti salvalo prima
+            if (autobus.getStato() != null && autobus.getStato().getIdStato() == null) {
+                em.persist(autobus.getStato()); // Salva prima StatoMezzo
             }
+
+            em.persist(autobus); // Ora salva Autobus
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
             e.printStackTrace();
         } finally {
             em.close();
@@ -35,11 +37,10 @@ public class AutobusDAOImpl implements AutobusDAO {
         try {
             em.getTransaction().begin();
 
-          
             Autobus autobusDaEliminare = em.find(Autobus.class, codiceUnivoco);
 
             if (autobusDaEliminare != null) {
-                em.remove(autobusDaEliminare); 
+                em.remove(autobusDaEliminare);
                 System.out.println("Autobus rimosso con successo: " + autobusDaEliminare);
             } else {
                 System.out.println("Autobus non trovato con codice univoco: " + codiceUnivoco);
@@ -60,12 +61,12 @@ public class AutobusDAOImpl implements AutobusDAO {
     public List<Autobus> getAllAutobus() {
         EntityManager em = EntityManagerUtil.getEntityManager();
         try {
-            
+
             TypedQuery<Autobus> query = em.createQuery("SELECT a FROM Autobus a", Autobus.class);
-            return query.getResultList(); 
+            return query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
-            return null; 
+            return null;
         } finally {
             em.close();
         }

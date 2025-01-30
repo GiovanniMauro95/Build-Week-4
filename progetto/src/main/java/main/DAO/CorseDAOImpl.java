@@ -2,30 +2,27 @@ package main.DAO;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import main.Entities.Tram;
+import main.Entities.Corsa;
 import main.EntityManagerUtil;
-import main.DAO.Interfaces.TramDAO;
+import main.DAO.Interfaces.CorseDAO;
 
 import java.util.List;
 import java.util.UUID;
 
-public class TramDAOImpl implements TramDAO {
+public class CorseDAOImpl implements CorseDAO {
 
     @Override
-    public void aggiungiTram(Tram tram) {
+    public void aggiungiCorsa(Corsa corsa) {
         EntityManager em = EntityManagerUtil.getEntityManager();
         try {
             em.getTransaction().begin();
-
-            // Controlla se StatoMezzo è già nel DB, altrimenti salvalo prima
-            if (tram.getStato() != null && tram.getStato().getIdStato() == null) {
-                em.persist(tram.getStato()); // Salva prima StatoMezzo
-            }
-
-            em.persist(tram); // Ora salva Autobus
+            em.persist(corsa); 
             em.getTransaction().commit();
+            System.out.println("\nCorsa aggiunta con successo: " + corsa);
         } catch (Exception e) {
-            em.getTransaction().rollback();
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
             e.printStackTrace();
         } finally {
             em.close();
@@ -33,18 +30,19 @@ public class TramDAOImpl implements TramDAO {
     }
 
     @Override
-    public void rimuoviTram(UUID codiceUnivoco) {
+    public void rimuoviCorsa(UUID idCorsa) {
         EntityManager em = EntityManagerUtil.getEntityManager();
         try {
             em.getTransaction().begin();
 
-            Tram tramDaEliminare = em.find(Tram.class, codiceUnivoco);
+          
+            Corsa corsaDaEliminare = em.find(Corsa.class, idCorsa);
 
-            if (tramDaEliminare != null) {
-                em.remove(tramDaEliminare);
-                System.out.println("Tram rimosso con successo: " + tramDaEliminare);
+            if (corsaDaEliminare != null) {
+                em.remove(corsaDaEliminare); 
+                System.out.println("Corsa rimossa con successo: " + corsaDaEliminare);
             } else {
-                System.out.println("Tram non trovato con codice: " + codiceUnivoco);
+                System.out.println("Corsa non trovata con ID: " + idCorsa);
             }
 
             em.getTransaction().commit();
@@ -59,15 +57,15 @@ public class TramDAOImpl implements TramDAO {
     }
 
     @Override
-    public List<Tram> getAllTram() {
+    public List<Corsa> getAllCorse() {
         EntityManager em = EntityManagerUtil.getEntityManager();
         try {
-
-            TypedQuery<Tram> query = em.createQuery("SELECT t FROM Tram t", Tram.class);
-            return query.getResultList();
+           
+            TypedQuery<Corsa> query = em.createQuery("SELECT c FROM Corsa c", Corsa.class);
+            return query.getResultList(); 
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return null; 
         } finally {
             em.close();
         }

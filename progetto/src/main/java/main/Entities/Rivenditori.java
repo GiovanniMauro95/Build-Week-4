@@ -1,56 +1,33 @@
 package main.Entities;
 
 import jakarta.persistence.*;
-import java.util.UUID;
 
 @Entity
-@Table(name = "Rivenditori") // Nome della tabella nel database
+@Table(name = "rivenditori") // Nome della tabella in minuscolo per convenzione
 public class Rivenditori extends EmettitoreBiglietti {
 
     @Id
-    @Column(name = "idRivenditore", nullable = false, unique = true)
-    private UUID idRivenditore;
+    @Column(name = "idrivenditore", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idRivenditore;
 
-    @Column(nullable = false)
-    private boolean stato;
+    @Column(name = "bigliettivenduti", nullable = false)
+    private int bigliettiVenduti = 0;
 
-    @Column(name = "bigliettiVenduti", nullable = false)
-    private int bigliettiVenduti;
-
-    @Column(name = "abbonamentiVenduti", nullable = false)
-    private int abbonamentiVenduti;
-
-    @Column(name = "idRivenditoreComposto", nullable = true, length = 255)
-    private String idRivenditoreComposto;
+    @Column(name = "abbonamentivenduti", nullable = false)
+    private int abbonamentiVenduti = 0;
 
     // Costruttore vuoto richiesto da Hibernate
     public Rivenditori() {
     }
 
-    // Costruttore con parametri (opzionale, per comodità)
-    public Rivenditori(Abbonamento abbonamento, Biglietto biglietto, boolean stato, int bigliettiVenduti, int abbonamentiVenduti, String idRivenditoreComposto) {
-        super(abbonamento, biglietto);
-        this.stato = stato;
-        this.bigliettiVenduti = bigliettiVenduti;
-        this.abbonamentiVenduti = abbonamentiVenduti;
-        this.idRivenditoreComposto = idRivenditoreComposto;
-    }
-
     // Getter e Setter
-    public UUID getIdRivenditore() {
+    public Long getIdRivenditore() {
         return idRivenditore;
     }
 
-    public void setIdRivenditore(UUID idRivenditore) {
+    public void setIdRivenditore(Long idRivenditore) {
         this.idRivenditore = idRivenditore;
-    }
-
-    public boolean isStato() {
-        return stato;
-    }
-
-    public void setStato(boolean stato) {
-        this.stato = stato;
     }
 
     public int getBigliettiVenduti() {
@@ -69,11 +46,24 @@ public class Rivenditori extends EmettitoreBiglietti {
         this.abbonamentiVenduti = abbonamentiVenduti;
     }
 
-    public String getIdRivenditoreComposto() {
-        return idRivenditoreComposto;
+    // Metodo per emettere un biglietto
+    public Biglietto emettiBiglietto() {
+        bigliettiVenduti++;
+        return new Biglietto();
     }
 
-    public void setIdRivenditoreComposto(String idRivenditoreComposto) {
-        this.idRivenditoreComposto = idRivenditoreComposto;
+    // Metodo per emettere un abbonamento
+    public Abbonamento emettiAbbonamento() {
+        abbonamentiVenduti++;
+        return new Abbonamento();
+    }
+
+    @Override
+    public String toString() {
+        return "\nRivenditori : {" +
+                "Numero Rivenditore = " + idRivenditore +
+                ", Biglietti Venduti = " + bigliettiVenduti +
+                ", Abbonamenti Venduti = " + abbonamentiVenduti +
+                '}';
     }
 }

@@ -8,16 +8,17 @@ import java.time.LocalDate;
 public class StatoMezzo {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.AUTO)
     @Column(name = "idStato", nullable = false, unique = true)
     private Long idStato;
 
     @Column(name = "stato", nullable = false)
     private boolean stato;
 
-    @Column(name = "data_inizio", nullable = false)
+    @Column(name = "data_inizio", nullable = true)
     private LocalDate dataInizio;
 
-    @Column(name = "data_fine", nullable = false)
+    @Column(name = "data_fine", nullable = true)
     private LocalDate dataFine;
 
     // Costruttore vuoto richiesto da Hibernate
@@ -29,6 +30,10 @@ public class StatoMezzo {
         this.stato = stato;
         this.dataInizio = dataInizio;
         this.dataFine = dataFine;
+    }
+
+    public StatoMezzo(boolean stato) {
+        this.stato = stato;
     }
 
     // Getter e Setter
@@ -66,11 +71,11 @@ public class StatoMezzo {
 
     @Override
     public String toString() {
-        return "StatoMezzo{" +
-                "idStato=" + idStato +
-                ", stato=" + stato +
-                ", dataInizio=" + dataInizio +
-                ", dataFine=" + dataFine +
+        return "{" +
+                "idStato = " + idStato +
+                ", stato = " + stato +
+                ", dataInizio = " + dataInizio +
+                ", dataFine = " + dataFine +
                 '}';
     }
 }

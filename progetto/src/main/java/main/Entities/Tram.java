@@ -8,33 +8,39 @@ import java.util.UUID;
 public class Tram {
 
     @Id
-    @Column(name = "codiceUnivoco", nullable = false, unique = true)
-    private UUID codiceUnivoco;
+    @GeneratedValue
+    @Column(name = "idtram", nullable = false, unique = true)
+    private UUID idTram;
 
     @Column(name = "capienza", nullable = false)
     private int capienza;
 
     @ManyToOne
-    @JoinColumn(name = "statoId", nullable = false) // Collega statoId alla tabella Stato_Mezzo
+    @JoinColumn(name = "statoId", nullable = false)
     private StatoMezzo stato;
+
+    @ManyToOne
+    @JoinColumn(name = "idcorsa")
+    private Corsa corsa;
 
     // Costruttore vuoto richiesto da Hibernate
     public Tram() {
     }
 
     // Costruttore con parametri
-    public Tram(int capienza, StatoMezzo stato) {
+    public Tram(int capienza, StatoMezzo stato, Corsa corsa) {
         this.capienza = capienza;
         this.stato = stato;
+        this.corsa = corsa;
     }
 
     // Getter e Setter
-    public UUID getCodiceUnivoco() {
-        return codiceUnivoco;
+    public UUID getIdTram() {
+        return idTram;
     }
 
-    public void setCodiceUnivoco(UUID codiceUnivoco) {
-        this.codiceUnivoco = codiceUnivoco;
+    public void setIdTram(UUID idTram) {
+        this.idTram = idTram;
     }
 
     public int getCapienza() {
@@ -53,12 +59,20 @@ public class Tram {
         this.stato = stato;
     }
 
+    public Corsa getCorsa() {
+        return corsa;
+    }
+
+    public void setCorsa(Corsa corsa) {
+        this.corsa = corsa;
+    }
+
     @Override
     public String toString() {
-        return "Tram{" +
-                "codiceUnivoco=" + codiceUnivoco +
-                ", capienza=" + capienza +
-                ", stato=" + stato +
-                '}';
+        return "\nTram :" +
+                "\nidTram = " + idTram +
+                "\ncapienza = " + capienza +
+                "\nstato = " + stato +
+                "\ncorsa = " + (corsa != null ? corsa.getIdCorsa() : "null");
     }
 }

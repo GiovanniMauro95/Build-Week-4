@@ -9,4 +9,6 @@ public interface RivenditoriDAO {
     void rimuoviRivenditori(Long idRivenditore);
 
     List<Rivenditori> getAllRivenditori();
+
+    Rivenditori getRivenditore(int scelta);
 }

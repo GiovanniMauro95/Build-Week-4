@@ -1,5 +1,6 @@
 package main.DAO;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,6 +17,11 @@ public class TrattaDAOImpl implements TrattaDAO {
         EntityManager em = EntityManagerUtil.getEntityManager();
         try {
             em.getTransaction().begin();
+
+            if (tratta.getIdTratta() == null) {
+                tratta.setIdTratta(UUID.randomUUID()); // Evita problemi se viene passato un ID null
+            }
+
             em.persist(tratta);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -68,4 +74,21 @@ public class TrattaDAOImpl implements TrattaDAO {
             em.close();
         }
     }
+
+    @Override
+    public List<Tratta> getAllTratteWithID(UUID id_da_cercare) {
+        EntityManager em = EntityManagerUtil.getEntityManager();
+        try {
+            TypedQuery<Tratta> query = em.createQuery(
+                    "SELECT t FROM Tratta t WHERE t.idTratta = :idDaCercare", Tratta.class);
+            query.setParameter("idDaCercare", id_da_cercare);
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        } finally {
+            em.close();
+        }
+    }
+
 }
