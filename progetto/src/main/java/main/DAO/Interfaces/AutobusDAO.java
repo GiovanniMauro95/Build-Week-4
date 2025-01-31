@@ -11,4 +11,6 @@ public interface AutobusDAO {
     void rimuoviAutobus(UUID codiceUnivoco);
 
     List<Autobus> getAllAutobus();
+
+    Autobus getAutobusByID(UUID id_da_cercare);
 }

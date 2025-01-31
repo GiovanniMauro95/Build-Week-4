@@ -72,4 +72,24 @@ public class TramDAOImpl implements TramDAO {
             em.close();
         }
     }
+
+    
+    @Override
+    public Tram getTramByID(UUID id_da_cercare) {
+    EntityManager em = EntityManagerUtil.getEntityManager();
+    try {
+        TypedQuery<Tram> query = em.createQuery(
+                "SELECT t FROM Tram t WHERE t.idTram = :idDaCercare", Tram.class);
+        query.setParameter("idDaCercare", id_da_cercare);
+        
+        return query.getSingleResult(); // Restituisce un solo Tram
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    } finally {
+        em.close();
+    }
+}
+
 }

@@ -11,4 +11,6 @@ public interface TramDAO {
     void rimuoviTram(UUID codiceUnivoco);
 
     List<Tram> getAllTram();
+
+    Tram getTramByID(UUID id_da_cercare);
 }

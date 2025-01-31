@@ -55,6 +55,10 @@ public class Autobus {
         return stato;
     }
 
+    public boolean getStatoMezzo() {
+        return stato.isStato();
+    }
+
     public void setStato(StatoMezzo stato) {
         this.stato = stato;
     }
@@ -73,6 +77,6 @@ public class Autobus {
                 "\nidAutobus = " + idAutobus +
                 "\nCapienza = " + capienza +
                 "\nStato = " + stato +
-                "\nCorsa = " + (corsa != null ? corsa.getIdCorsa() : "null");
+                "\nCorsa = " + (corsa != null ? corsa.getIdCorsa() : "null") + "\n";
     }
 }

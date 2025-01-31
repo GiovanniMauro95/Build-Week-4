@@ -17,7 +17,7 @@ public class StatoMezzoDAOImpl implements StatoMezzoDAO {
             em.getTransaction().begin();
             em.persist(statoMezzo); // Persiste il nuovo StatoMezzo
             em.getTransaction().commit();
-            System.out.println("StatoMezzo aggiunto con successo: " + statoMezzo);
+            System.out.println("\nStatoMezzo aggiunto con successo: " + statoMezzo + '\n');
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();

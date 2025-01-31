@@ -55,6 +55,10 @@ public class Tram {
         return stato;
     }
 
+    public boolean getStatoMezzo() {
+        return stato.isStato();
+    }
+
     public void setStato(StatoMezzo stato) {
         this.stato = stato;
     }

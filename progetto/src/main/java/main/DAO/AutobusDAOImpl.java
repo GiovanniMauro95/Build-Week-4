@@ -71,4 +71,22 @@ public class AutobusDAOImpl implements AutobusDAO {
             em.close();
         }
     }
+
+    @Override
+    public Autobus getAutobusByID(UUID id_da_cercare) {
+    EntityManager em = EntityManagerUtil.getEntityManager();
+    try {
+        TypedQuery<Autobus> query = em.createQuery(
+                "SELECT t FROM Autobus t WHERE t.idAutobus = :idDaCercare", Autobus.class);
+        query.setParameter("idDaCercare", id_da_cercare);
+        
+        return query.getSingleResult(); // Restituisce un solo Tram
+    } 
+    catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    } finally {
+        em.close();
+    }
+}
 }

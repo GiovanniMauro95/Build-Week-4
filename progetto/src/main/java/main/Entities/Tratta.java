@@ -6,8 +6,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "Tratta")
 public class Tratta {
-
+    
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private UUID idTratta; // Non usare auto-generazione del database
 
     @Column(name = "capoLinea", nullable = false)

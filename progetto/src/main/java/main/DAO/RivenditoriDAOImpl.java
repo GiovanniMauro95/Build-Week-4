@@ -61,6 +61,9 @@ public class RivenditoriDAOImpl implements RivenditoriDAO {
         try {
             // Creiamo una query JPQL per ottenere tutti i rivenditori
             TypedQuery<Rivenditori> query = em.createQuery("SELECT r FROM Rivenditori r", Rivenditori.class);
+            if (query.getResultList().isEmpty()) {
+                System.out.println("Non ci sono rivenditori al momento !");
+            }
             return query.getResultList(); // Restituisce la lista di rivenditori
         } catch (Exception e) {
             e.printStackTrace();
